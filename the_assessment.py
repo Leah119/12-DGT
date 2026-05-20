@@ -1,3 +1,5 @@
+import easygui
+
 cards = {}
 
 def main_menu():
@@ -56,7 +58,7 @@ def delete():
         if kill == "Yes":
             pop_cards = cards.pop(pokemon)
             easygui.msgbox(str(pokemon) + " has been deleted")
-            again = easygui.buttonbox("Would you like to remove another combo?",
+            again = easygui.buttonbox("Would you like to remove another card?",
                                     choices = ["Yes","No"])
             if again == "No":
                 main_menu()
