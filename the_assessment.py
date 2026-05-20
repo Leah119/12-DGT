@@ -1,6 +1,20 @@
 import easygui
 
-cards = {}
+cards = {"Lunala": {"HP": "250",
+                    "Type": "Psychic",
+                    "Number": "792",
+                    "Generation": "7",
+                    "Comment": "It is a holographic GX card"},
+         "Dragonair":{"HP": "90",
+                      "Type": "Dragon",
+                      "Number": "148",
+                      "Generation": "1",
+                      "Comment": "It's illustration was done by Hatachu"},
+        "Pikachu":{"HP": "40",
+                   "Type": "Electric",
+                   "Number": "25",
+                   "Generation": "1",
+                   "Comment": "The original pikachu card. He is round."}}
 
 def main_menu():
     do = easygui.buttonbox("What would you like to do with your pokemon cards?", 
@@ -30,6 +44,10 @@ def add():
         cards[name] ["Number"] = number
         gen = easygui.enterbox("Please enter your pokemon's generation:")
         cards[name] ["Generation"] = gen
+        mm = easygui.ynbox("Do you have any additional comments about the card?")
+        if mm == True:
+            comment = easygui.enterbox("Please write any comments:")
+            cards[name] ["Comment"] = comment
         print(cards)
         again = easygui.buttonbox("Would you like to add another pokemon?",
                                 choices = ["Yes", "No"])
@@ -69,12 +87,21 @@ def view():
                       choices = ["All Cards", "One Card"])
     
     if card_choice == "All Cards":
-        easygui.msgbox(cards)
+        easygui.msgbox("Please look at the output printed to Shell:")
+        
+        for card_id, card_info in cards.items():
+            print("\nCard:", card_id)
+
+            for key in card_info:
+                    print (key + ":", card_info[key])
+
         options = easygui.buttonbox("""Would you like to view a solo card 
                           or return to menu?""",
                           choices = ["Solo Card", "Main Menu"])
+        
         if options == "Main Menu":
             main_menu()
+
         elif options == "Solo Card":
             one_card()
 
