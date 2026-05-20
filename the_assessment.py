@@ -1,8 +1,19 @@
 cards = {}
 
 def main_menu():
-    easygui.buttonbox("What would you like to do with your pokemon cards?", 
+    do = easygui.buttonbox("What would you like to do with your pokemon cards?", 
                       choices = ["Add", "Delete", "View", "Quit"])
+    if do == "Add":
+        add()
+
+    elif do == "Delete":
+        delete()
+
+    elif do == "View":
+        print("We will do this")
+
+    elif do == "Quit":
+        quit ()
 
 def add():
     while True:
@@ -24,8 +35,19 @@ def add():
 
 def delete():
     while True:
-        pokemon = easygui.choicebox("Which card would you like to remove?")
+        choice_list = []
+        for x in cards:
+            choice_list.append(x)  
+        pokemon = easygui.choicebox("Which card would you like to remove?", 
+                                    choices = choice_list)
         kill = easygui.buttonbox("Are you sure you want to delete " + 
                                pokemon + "?",choices = ["Yes", "No"])
         if kill == "Yes":
-            print("EH")
+            pop_cards = cards.pop(pokemon)
+            easygui.msgbox(str(pokemon) + " has been deleted")
+            again = easygui.buttonbox("Would you like to remove another combo?",
+                                    choices = ["Yes","No"])
+            if again == "No":
+                main_menu()
+
+main_menu()
