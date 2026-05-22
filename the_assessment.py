@@ -131,4 +131,19 @@ def one_card():
             
 
 
-main_menu()
+
+placeholder = "steve"
+
+def edit():
+    sure = easygui.buttonbox("Are you sure you'd like to edit " +
+                              placeholder + "?",
+                                choices = ["Yes", "No", "Choose another"])
+    if sure == "Choose another":
+        easygui.choicebox("Which one would you like to pick?", choices =[cards])
+        
+    
+    if sure == "No":
+        easygui.msgbox("You are being taken back to the main menu!")
+        main_menu()
+
+edit()
