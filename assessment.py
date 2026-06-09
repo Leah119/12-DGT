@@ -62,7 +62,8 @@ def delete():
         pokemon = easygui.enterbox("Which card would you like to remove?")
         while pokemon not in cards:
             uh_oh = easygui.buttonbox("""Sorry, that card is not in our system.
-                               Please check spelling and try again,
+                               Please check spelling (and capitalisation)
+                                       and try again,
                                or return to main menu.""",
                                choices = ["Enter again", "Main Menu"])
             if uh_oh == "Enter again":
@@ -132,11 +133,11 @@ def one_card():
 
 
 
-placeholder = "steve"
+choice = cards["Dragonair"]
 
 def edit():
     sure = easygui.buttonbox("Are you sure you'd like to edit " +
-                              placeholder + "?",
+                              str(choice) + "?",
                                 choices = ["Yes", "No", "Choose another"])
     if sure == "Choose another":
         easygui.choicebox("Which one would you like to pick?", choices =[cards])
@@ -145,5 +146,33 @@ def edit():
     if sure == "No":
         easygui.msgbox("You are being taken back to the main menu!")
         main_menu()
+    
+    else:
+        which_key = easygui.choicebox("Which part of the card would you like to edit?", 
+                          choices = [choice])
 
-edit()
+
+
+
+#Testing different solutions --> TEMPORARY, WILL DELETE
+choice_list = []
+for x in cards:
+        choice_list.append(x)  
+
+choice = easygui.choicebox("Which card would you like to edit?", 
+                           choices = choice_list)
+change = easygui.buttonbox("Are you sure you would you like to edit this card?", 
+                               choices = ["Yes", "No"])
+if change == "Yes":
+    value_list = []
+    for x in cards[choice]:
+        value_list.append(x) #HAVE IT PRINT INFO FOR POKEMON
+
+    value = easygui.buttonbox("Which value would you like to change?",
+                                choices = value_list)
+    print(choice[value])
+    new = easygui.enterbox("What would you like to change it to?")
+    choice[value] == choice [new]
+    print(choice[new])
+
+    
