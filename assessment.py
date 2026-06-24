@@ -1,3 +1,8 @@
+"""This programme is designed to store the user's Pokemon cards, 
+and allow them to add, edit, delete, 
+and view the cards that they have stored"""
+
+
 import easygui
 
 cards = {"Lunala": {"HP": "250",
@@ -10,7 +15,7 @@ cards = {"Lunala": {"HP": "250",
                       "Number": "148",
                       "Generation": "1",
                       "Comment": "It's illustration was done by Hatachu"},
-        "Pikachu":{"HP": "40",
+        "Pikachu":{"HP": "60",
                    "Type": "Electric",
                    "Number": "25",
                    "Generation": "1",
@@ -60,9 +65,10 @@ def delete():
         for x in cards:
             choice_list.append(x)  
         pokemon = easygui.enterbox("Which card would you like to remove?")
+        pokemon = pokemon.capitalize()
         while pokemon not in cards:
             uh_oh = easygui.buttonbox("""Sorry, that card is not in our system.
-                               Please check spelling (and capitalisation)
+                               Please check spelling
                                        and try again,
                                or return to main menu.""",
                                choices = ["Enter again", "Main Menu"])
@@ -113,7 +119,8 @@ def view():
 def one_card():
     while True:
         specific_card = easygui.enterbox("Which card would you like to view?")
-        while specific_card not in cards:
+        specific_card = specific_card.capitalize()
+        while specific_card.capitalize() not in cards:
             uh_oh = easygui.buttonbox("""Sorry, that card is not in our system.
                                 Please check spelling and try again,
                                 or return to main menu.""",
@@ -126,6 +133,12 @@ def one_card():
                 main_menu()
 
         easygui.msgbox(cards[specific_card], title = specific_card + " info:")
+
+        name = specific_card
+        directory = r"C:\Users\Leah\Documents\DGT Python\assessment_stuff"
+        file_name = (f"{directory}\{name.lower()}.png")
+        easygui.msgbox("This is the pokemon", image=file_name)
+
         again = easygui.ynbox("Would you like to view another card?")
         if again is False:
             main_menu()
@@ -152,15 +165,20 @@ def edit():
                           choices = [choice])
 
 
-
+main_menu()
 
 #Testing different solutions --> TEMPORARY, WILL DELETE
+
+
+
+
 choice_list = []
 for x in cards:
         choice_list.append(x)  
 
 choice = easygui.choicebox("Which card would you like to edit?", 
                            choices = choice_list)
+print (choice)
 change = easygui.buttonbox("Are you sure you would you like to edit this card?", 
                                choices = ["Yes", "No"])
 if change == "Yes":
@@ -170,9 +188,9 @@ if change == "Yes":
 
     value = easygui.buttonbox("Which value would you like to change?",
                                 choices = value_list)
-    print(choice[value])
+ 
     new = easygui.enterbox("What would you like to change it to?")
-    choice[value] == choice [new]
+    choice[value] = new
     print(choice[new])
 
-    
+
