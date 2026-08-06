@@ -67,24 +67,22 @@ def add():
             name = easygui.enterbox("Please enter the pokemon's name:")    
         cards[name] = {}
         hp = easygui.integerbox("Please enter the pokemons's HP:\n"
-        "(Range: 1-500)")
-        while hp<1 or hp>500:
-            easygui.msgbox("That is an invalid entry. Please try again.")
-            hp = easygui.enterbox("Please enter the pokemons's HP:\n"
-                     "(Range: 1-500)")
+        "(Range: 1-500)", lowerbound = 1, upperbound = 500)
         cards[name]["HP"] = hp
         type = easygui.enterbox("Please enter the pokemon's type:")
         cards[name]["Type"] = type
-        number = easygui.enterbox("Please enter the pokemon's pokedex number:\n" 
-        "(Range: 1-1000)")
+        number = easygui.integerbox("Please enter the pokemon's pokedex number:\n" 
+        "(Range: 1-1000)", lowerbound = 1, upperbound = 1000)
         cards[name]["Number"] = number
         gen = easygui.enterbox("Please enter the pokemon's generation:")
+        while gen == "":
+                easygui.msgbox("That is an invalid entry. Please try again.")
+                gen = easygui.enterbox("Please enter the pokemon's name:") 
         cards[name]["Generation"] = gen
         mm = easygui.ynbox("Are there any additional comments about the card?")
         if mm is True:
             comment = easygui.enterbox("Please write any comments:")
             cards[name]["Comment"] = comment
-        print(cards)
         again = easygui.buttonbox("Would you like to add another pokemon?",
                                   choices=["Yes", "No"])
         if again == "No":
