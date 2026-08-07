@@ -6,7 +6,7 @@ and view the cards that they have stored.
 """
 
 
-import easygui
+import easygui as eg
 
 cards = {"Lunala": {"HP": "250",
                     "Type": "Psychic",
@@ -32,7 +32,7 @@ def main_menu():
     Pokemon cards, whether it's editing, viewing, deleting, adding, or quitting
     the programme.
     """
-    do = easygui.buttonbox("What would you like to you do with your cards?",
+    do = eg.buttonbox("What would you like to you do with your cards?",
                            choices=["Add",
                                     "Delete",
                                     "View",
@@ -61,29 +61,29 @@ def add():
     collection.
     """
     while True:
-        name = easygui.enterbox("Please enter the pokemon's name:")
+        name = eg.enterbox("Please enter the pokemon's name:")
         while name == "":
-            easygui.msgbox("That is an invalid entry. Please try again.")
-            name = easygui.enterbox("Please enter the pokemon's name:")    
+            eg.msgbox("That is an invalid entry. Please try again.")
+            name = eg.enterbox("Please enter the pokemon's name:")    
         cards[name] = {}
-        hp = easygui.integerbox("Please enter the pokemons's HP:\n"
+        hp = eg.integerbox("Please enter the pokemons's HP:\n"
         "(Range: 1-500)", lowerbound = 1, upperbound = 500)
         cards[name]["HP"] = hp
-        type = easygui.enterbox("Please enter the pokemon's type:")
+        type = eg.enterbox("Please enter the pokemon's type:")
         cards[name]["Type"] = type
-        number = easygui.integerbox("Please enter the pokemon's pokedex number:\n" 
+        number = eg.integerbox("Please enter the pokemon's pokedex number:\n" 
         "(Range: 1-1000)", lowerbound = 1, upperbound = 1000)
         cards[name]["Number"] = number
-        gen = easygui.enterbox("Please enter the pokemon's generation:")
+        gen = eg.enterbox("Please enter the pokemon's generation:")
         while gen == "":
-                easygui.msgbox("That is an invalid entry. Please try again.")
-                gen = easygui.enterbox("Please enter the pokemon's name:") 
+                eg.msgbox("That is an invalid entry. Please try again.")
+                gen = eg.enterbox("Please enter the pokemon's name:") 
         cards[name]["Generation"] = gen
-        mm = easygui.ynbox("Are there any additional comments about the card?")
+        mm = eg.ynbox("Are there any additional comments about the card?")
         if mm is True:
-            comment = easygui.enterbox("Please write any comments:")
+            comment = eg.enterbox("Please write any comments:")
             cards[name]["Comment"] = comment
-        again = easygui.buttonbox("Would you like to add another pokemon?",
+        again = eg.buttonbox("Would you like to add another pokemon?",
                                   choices=["Yes", "No"])
         if again == "No":
             main_menu()
@@ -98,26 +98,26 @@ def delete():
         choice_list = []
         for x in cards:
             choice_list.append(x)
-        pokemon = easygui.enterbox("Which card would you like to remove?")
+        pokemon = eg.enterbox("Which card would you like to remove?")
         pokemon = pokemon.capitalize()
         while pokemon not in cards:
-            uh_oh = easygui.buttonbox("""Sorry, that card is not in our system.
+            uh_oh = eg.buttonbox("""Sorry, that card is not in our system.
                                       Please check spelling
                                       and try again,or return to main menu.""",
                                       choices=["Enter again", "Main Menu"])
             if uh_oh == "Enter again":
-                pokemon = easygui.enterbox("""Which card would
+                pokemon = eg.enterbox("""Which card would
                                            you like to remove?""")
 
             elif uh_oh == "Main Menu":
                 main_menu()
 
-        kill = easygui.buttonbox("Are you sure you want to delete " +
+        kill = eg.buttonbox("Are you sure you want to delete " +
                                  pokemon + "?", choices=["Yes", "No"])
         if kill == "Yes":
             cards.pop(pokemon)
-            easygui.msgbox(str(pokemon) + " has been deleted")
-            again = easygui.buttonbox("Would you like to remove another card?",
+            eg.msgbox(str(pokemon) + " has been deleted")
+            again = eg.buttonbox("Would you like to remove another card?",
                                       choices=["Yes", "No"])
             if again == "No":
                 main_menu()
@@ -129,12 +129,12 @@ def view():
     This function allows the user to view a pokemon card's info from their
     collection, or view all cards at once.
     """
-    card_choice = easygui.buttonbox("""Would you like to view all card info,
+    card_choice = eg.buttonbox("""Would you like to view all card info,
                                     or just one card?""",
                                     choices=["All Cards", "One Card"])
 
     if card_choice == "All Cards":
-        easygui.msgbox("Please look at the output printed to Shell:")
+        eg.msgbox("Please look at the output printed to Shell:")
 
         for card_id, card_info in cards.items():
             print("\nCard:", card_id)
@@ -142,7 +142,7 @@ def view():
             for key in card_info:
                 print(key + ":", card_info[key])
 
-        options = easygui.buttonbox("""Would you like to view a solo card
+        options = eg.buttonbox("""Would you like to view a solo card
                                     or return to menu?""",
                                     choices=["Solo Card", "Main Menu"])
 
@@ -163,10 +163,10 @@ def one_card():
     from their collection.
     """
     while True:
-        specific_card = easygui.enterbox("Which card would you like to view?")
+        specific_card = eg.enterbox("Which card would you like to view?")
         specific_card = specific_card.capitalize()
         while specific_card.capitalize() not in cards:
-            uh_oh = easygui.buttonbox("""Sorry, that card is not in our system.
+            uh_oh = eg.buttonbox("""Sorry, that card is not in our system.
                                       Please check spelling and try again,
                                       or return to main menu.""",
                                       choices=["Enter again", "Main Menu"])
@@ -176,14 +176,14 @@ def one_card():
             elif uh_oh == "Main Menu":
                 main_menu()
 
-        easygui.msgbox(cards[specific_card], title=specific_card + " info:")
+        eg.msgbox(cards[specific_card], title=specific_card + " info:")
 
         name = specific_card
         directory = r"C:\Users\Leah\Documents\DGT Python\assessment_stuff"
         file_name = (f"{directory}\{name.lower()}.png")
-        easygui.msgbox("This is the pokemon", image=file_name)
+        eg.msgbox("This is the pokemon", image=file_name)
 
-        again = easygui.ynbox("Would you like to view another card?")
+        again = eg.ynbox("Would you like to view another card?")
         if again is False:
             main_menu()
 
@@ -198,10 +198,10 @@ def edit():
     for x in cards:
         choice_list.append(x)
 
-    choice = easygui.choicebox("Which card would you like to edit?",
+    choice = eg.choicebox("Which card would you like to edit?",
                                choices=choice_list)
 
-    change = easygui.buttonbox("Are you sure about editing " + choice + " ?",
+    change = eg.buttonbox("Are you sure about editing " + choice + " ?",
                                choices=["Yes", "No"])
     if change == "Yes":
         value_list = []
@@ -209,18 +209,18 @@ def edit():
             value_list.append(x)
 
         while True:
-            value = easygui.buttonbox("Which value would you like to change?",
+            value = eg.buttonbox("Which value would you like to change?",
                                       choices=value_list)
 
-            new = easygui.enterbox("What would you like to change it to?")
+            new = eg.enterbox("What would you like to change it to?")
 
             cards[choice][value] = new
-            easygui.msgbox("The values for " + choice +
+            eg.msgbox("The values for " + choice +
                            " are now: " + str(cards[choice]))
-            repeat = easygui.buttonbox("Would you like to edit another value?",
+            repeat = eg.buttonbox("Would you like to edit another value?",
                                        choices=["Yes", "No"])
             if repeat == "No":
-                menu_card = easygui.buttonbox("""Would you like to edit another
+                menu_card = eg.buttonbox("""Would you like to edit another
                                               card or return to main menu?""",
                                               choices=["Edit another",
                                                        "Main Menu"])
@@ -231,7 +231,7 @@ def edit():
                     main_menu()
 
     elif change == "No":
-        menu_card = easygui.buttonbox("""Would you like to edit another card or
+        menu_card = eg.buttonbox("""Would you like to edit another card or
                            return to main menu?""", choices=["Edit another",
                                                              "Main Menu"])
         if menu_card == "Edit another":
@@ -241,5 +241,5 @@ def edit():
             main_menu()
 
 
-easygui.msgbox("Welcome to the Pokemon card storer!")
+eg.msgbox("Welcome to the Pokemon card storer!")
 main_menu()
