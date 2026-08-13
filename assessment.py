@@ -33,11 +33,11 @@ def main_menu():
     the programme.
     """
     do = eg.buttonbox("What would you like to you do with your cards?",
-                           choices=["Add",
-                                    "Delete",
-                                    "View",
-                                    "Edit",
-                                    "Quit"])
+                      choices=["Add",
+                               "Delete",
+                               "View",
+                               "Edit",
+                               "Quit"])
     if do == "Add":
         add()
 
@@ -64,27 +64,28 @@ def add():
         name = eg.enterbox("Please enter the pokemon's name:")
         while name == "":
             eg.msgbox("That is an invalid entry. Please try again.")
-            name = eg.enterbox("Please enter the pokemon's name:")    
+            name = eg.enterbox("Please enter the pokemon's name:")
         cards[name] = {}
         hp = eg.integerbox("Please enter the pokemons's HP:\n"
-        "(Range: 1-500)", lowerbound = 1, upperbound = 500)
+                           "(Range: 1-500)", lowerbound=1, upperbound=500)
         cards[name]["HP"] = hp
         type = eg.enterbox("Please enter the pokemon's type:")
         cards[name]["Type"] = type
-        number = eg.integerbox("Please enter the pokemon's pokedex number:\n" 
-        "(Range: 1-1000)", lowerbound = 1, upperbound = 1000)
+        number = eg.integerbox("Please enter the pokemon's pokedex number:\n"
+                               "(Range: 1-1100)", lowerbound=1,
+                               upperbound=1100)
         cards[name]["Number"] = number
         gen = eg.enterbox("Please enter the pokemon's generation:")
         while gen == "":
-                eg.msgbox("That is an invalid entry. Please try again.")
-                gen = eg.enterbox("Please enter the pokemon's name:") 
+            eg.msgbox("That is an invalid entry. Please try again.")
+            gen = eg.enterbox("Please enter the pokemon's name:")
         cards[name]["Generation"] = gen
         mm = eg.ynbox("Are there any additional comments about the card?")
         if mm is True:
             comment = eg.enterbox("Please write any comments:")
             cards[name]["Comment"] = comment
         again = eg.buttonbox("Would you like to add another pokemon?",
-                                  choices=["Yes", "No"])
+                             choices=["Yes", "No"])
         if again == "No":
             main_menu()
 
@@ -100,25 +101,27 @@ def delete():
             choice_list.append(x)
         pokemon = eg.enterbox("Which card would you like to remove?")
         pokemon = pokemon.capitalize()
+        # This while loop ensures that the pokemon entered is in the dictionary
+        # If it is not, it will allow them to enter again or return to menu
         while pokemon not in cards:
             uh_oh = eg.buttonbox("""Sorry, that card is not in our system.
-                                      Please check spelling
-                                      and try again,or return to main menu.""",
-                                      choices=["Enter again", "Main Menu"])
+                                    Please check spelling
+                                    and try again,or return to main menu.""",
+                                 choices=["Enter again", "Main Menu"])
             if uh_oh == "Enter again":
                 pokemon = eg.enterbox("""Which card would
                                            you like to remove?""")
 
             elif uh_oh == "Main Menu":
                 main_menu()
-
-        kill = eg.buttonbox("Are you sure you want to delete " +
-                                 pokemon + "?", choices=["Yes", "No"])
-        if kill == "Yes":
+# Asks user for confirmation before deleting the card
+        remove = eg.buttonbox("Are you sure you want to delete " +
+                              pokemon + "?", choices=["Yes", "No"])
+        if remove == "Yes":
             cards.pop(pokemon)
             eg.msgbox(str(pokemon) + " has been deleted")
             again = eg.buttonbox("Would you like to remove another card?",
-                                      choices=["Yes", "No"])
+                                 choices=["Yes", "No"])
             if again == "No":
                 main_menu()
 
@@ -131,8 +134,8 @@ def view():
     """
     card_choice = eg.buttonbox("""Would you like to view all card info,
                                     or just one card?""",
-                                    choices=["All Cards", "One Card"])
-
+                               choices=["All Cards", "One Card"])
+# Allows user to view all card info,and the option to view 1 card or go to menu
     if card_choice == "All Cards":
         eg.msgbox("Please look at the output printed to Shell:")
 
@@ -144,7 +147,7 @@ def view():
 
         options = eg.buttonbox("""Would you like to view a solo card
                                     or return to menu?""",
-                                    choices=["Solo Card", "Main Menu"])
+                               choices=["Solo Card", "Main Menu"])
 
         if options == "Main Menu":
             main_menu()
@@ -169,7 +172,7 @@ def one_card():
             uh_oh = eg.buttonbox("""Sorry, that card is not in our system.
                                       Please check spelling and try again,
                                       or return to main menu.""",
-                                      choices=["Enter again", "Main Menu"])
+                                 choices=["Enter again", "Main Menu"])
             if uh_oh == "Enter again":
                 one_card()
 
@@ -179,8 +182,8 @@ def one_card():
         eg.msgbox(cards[specific_card], title=specific_card + " info:")
 
         name = specific_card
-        directory = r"C:\Users\Leah\Documents\DGT Python\assessment_stuff"
-        file_name = (f"{directory}\{name.lower()}.png")
+        directory = r"C:/Users/Leah/Documents/DGT Python/assessment_stuff"
+        file_name = (f"{directory}/{name.lower()}.png")
         eg.msgbox("This is the pokemon", image=file_name)
 
         again = eg.ynbox("Would you like to view another card?")
@@ -199,10 +202,10 @@ def edit():
         choice_list.append(x)
 
     choice = eg.choicebox("Which card would you like to edit?",
-                               choices=choice_list)
+                          choices=choice_list)
 
     change = eg.buttonbox("Are you sure about editing " + choice + " ?",
-                               choices=["Yes", "No"])
+                          choices=["Yes", "No"])
     if change == "Yes":
         value_list = []
         for x in cards[choice]:
@@ -210,20 +213,20 @@ def edit():
 
         while True:
             value = eg.buttonbox("Which value would you like to change?",
-                                      choices=value_list)
+                                 choices=value_list)
 
             new = eg.enterbox("What would you like to change it to?")
 
             cards[choice][value] = new
             eg.msgbox("The values for " + choice +
-                           " are now: " + str(cards[choice]))
+                      " are now: " + str(cards[choice]))
             repeat = eg.buttonbox("Would you like to edit another value?",
-                                       choices=["Yes", "No"])
+                                  choices=["Yes", "No"])
             if repeat == "No":
                 menu_card = eg.buttonbox("""Would you like to edit another
                                               card or return to main menu?""",
-                                              choices=["Edit another",
-                                                       "Main Menu"])
+                                         choices=["Edit another",
+                                                  "Main Menu"])
                 if menu_card == "Edit another":
                     edit()
 
