@@ -24,6 +24,8 @@ cards = {"Lunala": {"HP": "250",
                      "Generation": "1",
                      "Comment": "The original pikachu card. He is round."}}
 
+# directory tells the code where to find the image files
+directory = r"C:/Users/Leah/Documents/DGT Python/assessment_stuff"
 
 def main_menu():
     """Display the main menu.
@@ -82,10 +84,10 @@ def add():
             eg.msgbox("That is an invalid entry. Please try again.")
             gen = eg.enterbox("Please enter the Pokémon's name:")
         cards[name]["Generation"] = gen
-        mm = eg.ynbox("Are there any additional comments about the card?")
-        if mm is True:
-            comment = eg.enterbox("Please write any comments:")
-            cards[name]["Comment"] = comment
+        comment_q = eg.ynbox("Are there any additional comments about the card?")
+        if comment_q is True:
+            comment_a = eg.enterbox("Please write any comments:")
+            cards[name]["Comment"] = comment_a
         again = eg.buttonbox("Would you like to add another Pokémon?",
                              choices=["Yes", "No"])
         if again == "No":
@@ -106,15 +108,15 @@ def delete():
         # This while loop ensures that the Pokémon entered is in the dictionary
         # If it is not, it will allow them to enter again or return to menu
         while pokémon not in cards:
-            uh_oh = eg.buttonbox("""Sorry, that card is not in our system.
+            n_found = eg.buttonbox("""Sorry, that card is not in our system.
                                     Please check spelling
                                     and try again,or return to main menu.""",
                                  choices=["Enter again", "Main Menu"])
-            if uh_oh == "Enter again":
+            if n_found == "Enter again":
                 pokémon = eg.enterbox("""Which card would
                                            you like to remove?""")
 
-            elif uh_oh == "Main Menu":
+            elif n_found == "Main Menu":
                 main_menu()
 # Asks user for confirmation before deleting the card
         remove = eg.buttonbox("Are you sure you want to delete " +
@@ -172,21 +174,19 @@ def one_card():
         specific_card = specific_card.capitalize()
         # This while loop forces the user to enter a correct input or exit
         while specific_card.capitalize() not in cards:
-            uh_oh = eg.buttonbox("""Sorry, that card is not in our system.
+            n_found = eg.buttonbox("""Sorry, that card is not in our system.
                                       Please check spelling and try again,
                                       or return to main menu.""",
                                  choices=["Enter again", "Main Menu"])
-            if uh_oh == "Enter again":
+            if n_found == "Enter again":
                 one_card()
 
-            elif uh_oh == "Main Menu":
+            elif n_found == "Main Menu":
                 main_menu()
 
         eg.msgbox(cards[specific_card], title=specific_card + " info:")
 
         name = specific_card
-        # directory tells the code where to find the image files
-        directory = r"C:/Users/Leah/Documents/DGT Python/assessment_stuff"
         file_name = (f"{directory}/{name.lower()}.png")
         eg.msgbox("This is the Pokémon", image=file_name)
 
